@@ -6,7 +6,7 @@ public class FruitSpawner : MonoBehaviour
     public float minInterval = 0.3f;
     public float startInterval = 2f;
     public float decayRate = 0.7f;
-    public int maxNumOfBalls = 5;
+    public int maxNumOfFruits;
 
     private int spawnCount;
     private float timer;
@@ -15,7 +15,9 @@ public class FruitSpawner : MonoBehaviour
 
     void Start()
     {
+        maxNumOfFruits = GameManager.Instance.maxFruitsToSpawn;
         spawnCollider = GetComponent<BoxCollider2D>();
+        
         if (!spawnCollider)
         {
             Debug.LogError("Missing BoxCollider2D on FruitSpawner!");
@@ -24,14 +26,14 @@ public class FruitSpawner : MonoBehaviour
 
     void Update()
     {
-        if (spawnCount >= maxNumOfBalls) return;
+        if (spawnCount >= maxNumOfFruits) return;
 
         float spawnInterval = Mathf.Max(minInterval, startInterval * Mathf.Pow(decayRate, spawnCount));
         timer += Time.deltaTime;
 
         if (timer >= spawnInterval)
         {
-            SpawnBall();
+            SpawnFruit();
             timer = 0f;
             
             print(spawnCount);
@@ -40,7 +42,7 @@ public class FruitSpawner : MonoBehaviour
         }
     }
 
-    void SpawnBall()
+    void SpawnFruit()
     {
         Vector2 spawnPosition = GetRandomPointInBounds();
         Instantiate(fruitPrefab, spawnPosition, Quaternion.identity);

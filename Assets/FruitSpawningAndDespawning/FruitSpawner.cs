@@ -3,9 +3,9 @@ using UnityEngine;
 public class FruitSpawner : MonoBehaviour
 {
     public GameObject fruitPrefab;
-    public float minInterval = 0.3f;
-    public float startInterval = 2f;
-    public float decayRate = 0.7f;
+    public float minInterval = 0.25f;
+    public float startInterval = 2.5f;
+    public float decayRate = 0.8f;
     public int maxNumOfFruits;
 
     private int spawnCount;

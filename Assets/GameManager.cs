@@ -10,9 +10,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Settings")]
     public int maxFruitsToSpawn = 100;
+    public int score = 0;
 
     [Header("UI")]
     public TextMeshProUGUI FruitScoreTextUI;
+
 
     void Awake()
     {
@@ -33,6 +35,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        FruitScoreTextUI.text = "##" + " / " + maxFruitsToSpawn.ToString();
+        
+        if (FruitScoreTextUI)
+        {
+            FruitScoreTextUI.text = score + " / " + maxFruitsToSpawn.ToString();
+        }
+
     }
 }

@@ -6,6 +6,7 @@ public class BasketController : MonoBehaviour
     public float speed = 5f;
     public float boundary = 8f;
     public int fruitCount = 0;
+    public AudioSource catchSound;
 
     private Rigidbody2D rb;
     private float horizontalInput = 0f;
@@ -62,8 +63,11 @@ public class BasketController : MonoBehaviour
         if (other.CompareTag("Fruit"))
         {
             fruitCount++;
+            GameManager.Instance.score = fruitCount;
             Destroy(other.gameObject);
             Debug.Log("Fruit collected! Total: " + fruitCount);
+            catchSound.pitch = Random.Range(0.8f ,1.2f);
+            catchSound.Play();
         }
     }
 }

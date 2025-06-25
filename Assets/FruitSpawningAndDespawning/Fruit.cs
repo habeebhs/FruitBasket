@@ -7,6 +7,7 @@ public class Fruit : MonoBehaviour
     void Start()
     {
         GetComponent<SpriteRenderer>().sprite = fruitSprites[Random.Range(0, fruitSprites.Length)];
+        GetComponent<AudioSource>().pitch = Random.Range(0.5f, 1f);
         gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
     }
 

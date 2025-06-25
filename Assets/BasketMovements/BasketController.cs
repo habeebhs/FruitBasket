@@ -5,8 +5,9 @@ public class BasketController : MonoBehaviour
 {
     public float speed = 5f;
     public float boundary = 8f;
-    public int fruitCount = 0;
-    public AudioSource catchSound;
+    public static int fruitCount = 0;
+    public GameObject[] fruitVisualPrefabs;
+    public Transform pileAnchor;
 
     private Rigidbody2D rb;
     private float horizontalInput = 0f;
@@ -35,7 +36,11 @@ public class BasketController : MonoBehaviour
 
     private void OnDisable()
     {
-        controls.Disable();
+        if (controls != null)
+        {
+            controls.Disable();
+        }
+        
     }
 
     private void Start()
@@ -63,11 +68,33 @@ public class BasketController : MonoBehaviour
         if (other.CompareTag("Fruit"))
         {
             fruitCount++;
-            GameManager.Instance.score = fruitCount;
             Destroy(other.gameObject);
             Debug.Log("Fruit collected! Total: " + fruitCount);
-            catchSound.pitch = Random.Range(0.8f ,1.2f);
-            catchSound.Play();
+
+            //Stacking the basket
+
+            if (fruitVisualPrefabs.Length > 0 && pileAnchor != null)
+            {
+                int index = Random.Range(0, fruitVisualPrefabs.Length);
+                GameObject prefabToUse = fruitVisualPrefabs[index];
+
+                // Layer-based positioning (keep your working code!)
+                int fruitsPerLayer = 15;
+                int layer = (fruitCount - 1) / fruitsPerLayer;
+                float radius = 0.8f + 0.03f * layer;
+                float angle = Random.Range(0f, 2f * Mathf.PI);
+                float xOffset = (radius + Random.Range(-0.05f, 0.05f)) * Mathf.Cos(angle);
+                float zOffset = (radius + Random.Range(-0.05f, 0.05f)) * Mathf.Sin(angle);
+                float yOffset = 0.12f * layer + Random.Range(-0.01f, 0.01f);
+                Vector3 pilePos = pileAnchor.position + new Vector3(xOffset, yOffset, zOffset);
+
+                Quaternion randomRot = Quaternion.Euler(0, 0, Random.Range(-20f, 20f));
+
+                GameObject fruit = Instantiate(prefabToUse, pilePos, randomRot, pileAnchor);
+                //fruit.transform.localScale = Vector3.one * 0.9f; // Optional variety
+            }
+
         }
     }
+
 }

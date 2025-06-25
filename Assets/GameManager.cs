@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         
         if (FruitScoreTextUI)
         {
-            FruitScoreTextUI.text = score + " / " + maxFruitsToSpawn.ToString();
+            FruitScoreTextUI.text = BasketController.fruitCount + " / " + maxFruitsToSpawn;
         }
 
     }

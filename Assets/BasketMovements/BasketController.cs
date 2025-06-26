@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class BasketController : MonoBehaviour
 {
@@ -45,6 +46,7 @@ public class BasketController : MonoBehaviour
 
     private void Start()
     {
+        fruitCount = 0;
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
         {
@@ -94,6 +96,12 @@ public class BasketController : MonoBehaviour
                 //fruit.transform.localScale = Vector3.one * 0.9f; // Optional variety
             }
 
+        }
+
+        else if (other.CompareTag("Bomb"))
+        {
+            print("GameOver");
+            SceneManager.LoadScene("GameOver_Scene");
         }
     }
 

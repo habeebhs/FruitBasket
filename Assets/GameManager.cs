@@ -30,16 +30,24 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
+        //fruitSpawner = GameObject.Find("FruitSpawner");
     }
 
     void Update()
     {
-        
+        score = BasketController.fruitCount;
         if (FruitScoreTextUI)
         {
             FruitScoreTextUI.text = BasketController.fruitCount + " / " + maxFruitsToSpawn;
         }
 
+        else
+        {
+            if (GameObject.Find("FruitScoreText"))
+            { 
+                FruitScoreTextUI = GameObject.Find("FruitScoreText").GetComponent<TextMeshProUGUI>();
+            }
+            
+        }
     }
 }
